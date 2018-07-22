@@ -26,10 +26,10 @@ public class UIUpdater : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        coffeeBeanCount.text = "Coffee Beans: " + rManager.coffeeBeans.ToString("F2");
-        coffeeCount.text = "Coffee: " + rManager.coffee.ToString("F2");
-        moneyCount.text = "Money: " + rManager.money.ToString("F2");
-        farmerCount.text = "Farmer: " + farmers.farmers;
-        baristaCount.text = "Baristas: " + baristas.baristas;
+        coffeeBeanCount.text = "COFFEE BEANS: " + rManager.coffeeBeans.ToString("F2");
+        coffeeCount.text = "COFFEE: " + rManager.coffee.ToString("F2");
+        moneyCount.text = "$" + rManager.money.ToString("F2");
+        farmerCount.text = "FARMERS: " + farmers.farmers;
+        baristaCount.text = "BARISTAS: " + baristas.baristas;
 	}
 }
