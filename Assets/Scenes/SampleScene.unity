@@ -750,7 +750,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beanPrefab: {fileID: 1414227567245614, guid: 825f0d178b202ee4986cbab30acb719e, type: 2}
   spawnPoint: {fileID: 444199586}
-  poolSize: 30
+  startingPoolSize: 10
+  currentPoolSize: 0
   spawnForceMax: {x: 5, y: 10, z: 5}
 --- !u!1 &642647875
 GameObject:
@@ -1300,7 +1301,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400158, guid: 25937e19a5ac48d4f87afef97296789d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.83
+      value: -0.79
       objectReference: {fileID: 0}
     - target: {fileID: 400158, guid: 25937e19a5ac48d4f87afef97296789d, type: 3}
       propertyPath: m_LocalPosition.y

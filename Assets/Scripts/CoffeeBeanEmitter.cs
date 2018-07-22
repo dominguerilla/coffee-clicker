@@ -9,7 +9,8 @@ public class CoffeeBeanEmitter : MonoBehaviour {
 
     public GameObject beanPrefab;
     public Transform spawnPoint;
-    public int poolSize = 10;
+    public int startingPoolSize = 30;
+    public int currentPoolSize;
 
     public Vector3 spawnForceMax = new Vector3(1, 1, 1);
 
@@ -19,7 +20,16 @@ public class CoffeeBeanEmitter : MonoBehaviour {
     private void Awake() {
         beanPool = new Stack<GameObject>();
         plant = GetComponent<CoffeePlant>();
-        for (int i = 0; i < poolSize; i++) {
+        AddToPool(startingPoolSize);
+        currentPoolSize = beanPool.Count;
+    }
+
+    private void Update() {
+        currentPoolSize = beanPool.Count;
+    }
+
+    void AddToPool(int number) {
+        for (int i = 0; i < number; i++) {
             GameObject bean = GameObject.Instantiate<GameObject>(beanPrefab);
             CoffeeBeanParticle beanParticle = bean.GetComponent<CoffeeBeanParticle>();
             beanParticle.SetEmitter(this);
@@ -34,7 +44,7 @@ public class CoffeeBeanEmitter : MonoBehaviour {
 
     public void EmitBeanClick() {
         for(int i = 0; i < plant.beansPerClick; i++) {
-            if(beanPool.Count > 0) {
+            if(beanPool.Count > plant.beansPerClick) {
                 GameObject bean = beanPool.Pop();
                 bean.transform.position = spawnPoint.position;
                 CoffeeBeanParticle particle = bean.GetComponent<CoffeeBeanParticle>();
@@ -49,6 +59,8 @@ public class CoffeeBeanEmitter : MonoBehaviour {
                 beanBody.AddRelativeForce(spawnForce, ForceMode.Impulse);
                 beanBody.AddTorque(spawnForce);
                 StartCoroutine(particle.Disappear());
+            }else {
+                AddToPool(startingPoolSize / 10);
             }
         }
     }
