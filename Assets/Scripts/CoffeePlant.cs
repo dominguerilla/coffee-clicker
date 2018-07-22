@@ -22,7 +22,6 @@ public class CoffeePlant : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        Debug.Log("Coffee Plant clicked!");
         rManager.coffeeBeans += beansPerClick;
         SwellDown();
     }
