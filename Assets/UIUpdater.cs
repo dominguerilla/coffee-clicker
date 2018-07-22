@@ -13,6 +13,8 @@ public class UIUpdater : MonoBehaviour {
     public Text farmerCount;
     public Text baristaCount;
 
+    public GameObject shopGO;
+
     ResourceManager rManager;
     Baristas baristas;
     Farmers farmers;
@@ -26,10 +28,19 @@ public class UIUpdater : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        UpdateResourceCounts();
+    }
+
+    void UpdateResourceCounts() {
         coffeeBeanCount.text = "COFFEE BEANS: " + rManager.coffeeBeans.ToString("F2");
         coffeeCount.text = "COFFEE: " + rManager.coffee.ToString("F2");
         moneyCount.text = "$" + rManager.money.ToString("F2");
         farmerCount.text = "FARMERS: " + farmers.farmers;
         baristaCount.text = "BARISTAS: " + baristas.baristas;
-	}
+    }
+
+    public void ToggleShop() {
+        bool isActive = shopGO.activeInHierarchy;
+        shopGO.SetActive(!isActive);
+    }
 }
