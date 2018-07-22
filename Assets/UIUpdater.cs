@@ -29,7 +29,7 @@ public class UIUpdater : MonoBehaviour {
         coffeeBeanCount.text = "Coffee Beans: " + rManager.coffeeBeans.ToString("F2");
         coffeeCount.text = "Coffee: " + rManager.coffee.ToString("F2");
         moneyCount.text = "Money: " + rManager.money.ToString("F2");
-        farmerCount.text = "Farmer: " + farmers.farmers.ToString("F2");
-        baristaCount.text = "Baristas: " + baristas.baristas.ToString("F2");
+        farmerCount.text = "Farmer: " + farmers.farmers;
+        baristaCount.text = "Baristas: " + baristas.baristas;
 	}
 }

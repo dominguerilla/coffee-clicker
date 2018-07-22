@@ -21,12 +21,26 @@ public class ResourceManager : MonoBehaviour {
         else if (instance != this) 
             Destroy(this);   
     }
-    
-    public void MakeCoffee() {
+
+    public void BrewCoffeeClick() {
         if(coffeeBeans - beansPerCoffee >= 0) {
             coffeeBeans -= beansPerCoffee;
             coffee += coffeePerClickBrew;
         }
+    }
+
+    public void BrewCoffee(float coffeeAmount) {
+        coffeeBeans -= coffeeAmount * beansPerCoffee;
+        if(coffeeBeans < 0)
+            coffeeBeans = 0;
+        coffee += coffeeAmount;
+    }
+
+    public void SellCoffee(float coffeeAmount) {
+        coffee -= coffeeAmount;
+        if (coffee < 0)
+            coffee = 0;
+        money += coffeeAmount * pricePerCoffee;
     }
 
     public void SellCoffee(Customer currentCustomer) {

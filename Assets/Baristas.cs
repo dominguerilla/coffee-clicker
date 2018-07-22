@@ -14,6 +14,11 @@ public class Baristas : MonoBehaviour {
     /// </summary>
     public float coffeeBrewSpeed = 1.0f;
 
+    /// <summary>
+    /// The amount of coffee each barista can sell per five seconds
+    /// </summary>
+    public float coffeeSellSpeed = 0.5f;
+
     ResourceManager rManager;
 
     private void Awake() {
@@ -31,15 +36,24 @@ public class Baristas : MonoBehaviour {
 
     IEnumerator UpdateCoffee() {
         while(true) {
-            if (rManager.coffeeBeans >= baristas * rManager.beansPerCoffee) {
-                rManager.coffeeBeans -= (baristas * rManager.beansPerCoffee) / 5;
-                rManager.coffee += (baristas * coffeeBrewSpeed) / 5;
-                yield return new WaitForSeconds(1.0f);
-            }else {
-                Debug.Log("Not enough coffee beans!");
-                yield return new WaitForSeconds(1.0f);
-            }
+            BrewCoffee();
+            SellCoffee();
+            yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    void BrewCoffee() {
+        float possibleCoffeeToMake = baristas * (rManager.coffeeBeans / rManager.beansPerCoffee);
+        float maxCoffeeMade = (baristas * coffeeBrewSpeed) / 5;
+        float coffeeAmount = Mathf.Min(maxCoffeeMade, possibleCoffeeToMake);
+        rManager.BrewCoffee(coffeeAmount);
+    }
+
+    void SellCoffee() {
+        float possibleCoffeeToSell = (baristas * rManager.coffee) / 5;
+        float maxCoffeeToSell = (baristas * coffeeSellSpeed) / 5;
+        float coffeeToSell = Mathf.Min(possibleCoffeeToSell, maxCoffeeToSell);
+        rManager.SellCoffee(coffeeToSell);
     }
 
     public void HireBarista() {

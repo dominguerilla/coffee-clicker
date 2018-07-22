@@ -19,6 +19,6 @@ public class CoffeeMaker : MonoBehaviour {
 
     public void OnMouseDown() {
         Debug.Log("Coffee Maker clicked!");
-        rManager.MakeCoffee();
+        rManager.BrewCoffeeClick();
     }
 }
