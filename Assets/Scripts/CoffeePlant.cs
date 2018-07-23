@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CoffeePlant : MonoBehaviour {
 
@@ -22,8 +23,10 @@ public class CoffeePlant : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        rManager.coffeeBeans += beansPerClick;
-        SwellDown();
+        if(EventSystem.current.IsPointerOverGameObject()) {
+            rManager.coffeeBeans += beansPerClick;
+            SwellDown();
+        }
     }
     
     
