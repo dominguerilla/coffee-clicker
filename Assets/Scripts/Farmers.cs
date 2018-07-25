@@ -9,6 +9,10 @@ public class Farmers : MonoBehaviour {
     public int farmers;
     public float farmerCost = 20f;
 
+    [Header("Upgrade Costs")]
+    public float harvestUpgradeCost = 400f;
+    public float costUpgradeCost = 600f;
+
     /// <summary>
     /// The amount of beans harvested per five seconds.
     /// </summary>

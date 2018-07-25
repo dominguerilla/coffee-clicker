@@ -19,6 +19,11 @@ public class Baristas : MonoBehaviour {
     /// </summary>
     public float coffeeSellSpeed = 0.5f;
 
+    [Header("Upgrade Costs")]
+    public float brewUpgradeCost = 450f;
+    public float sellUpgradeCost = 450f;
+    public float costUpgradeCost = 600f;
+
     ResourceManager rManager;
 
     private void Awake() {

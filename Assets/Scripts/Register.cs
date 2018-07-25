@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Register : MonoBehaviour {
+public class Register : MonoBehaviour{
 
     public int coffeeSoldPerClick = 1;
+    public float upgradeCost = 300f;
 
     ResourceManager rManager;
     [SerializeField]

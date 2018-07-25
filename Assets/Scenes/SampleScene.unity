@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 222944962}
   - component: {fileID: 222944964}
   - component: {fileID: 222944963}
+  - component: {fileID: 222944965}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -284,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coffeeBeans: 0
   coffee: 0
-  money: 0
+  money: 10000
   beansPerCoffee: 10
   pricePerCoffee: 2
   coffeePerClickBrew: 1
@@ -331,6 +332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmers: 0
   farmerCost: 20
+  harvestUpgradeCost: 400
+  costUpgradeCost: 600
   beanHarvestSpeed: 5
 --- !u!114 &222944964
 MonoBehaviour:
@@ -347,6 +350,28 @@ MonoBehaviour:
   baristaCost: 50
   coffeeBrewSpeed: 1
   coffeeSellSpeed: 0.5
+  brewUpgradeCost: 450
+  sellUpgradeCost: 450
+  costUpgradeCost: 600
+--- !u!114 &222944965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 222944959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81c558e38338ab4b833e2d41a0fff8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plant: {fileID: 633205872}
+  cMaker: {fileID: 384524565}
+  register: {fileID: 1273375149}
+  farmerManager: {fileID: 222944963}
+  baristaManager: {fileID: 222944964}
+  beanEmitter: {fileID: 633205874}
+  coffeeEmitter: {fileID: 0}
+  moneyEmitter: {fileID: 0}
 --- !u!1 &282840810
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coffeePerClick: 1
+  upgradeCost: 2000
 --- !u!65 &384524566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -577,7 +603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 49.999985, y: -376.52}
+  m_AnchoredPosition: {x: 50, y: -376.52}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &534749664
@@ -844,7 +870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 297.7, y: -97.7}
+  m_AnchoredPosition: {x: 297.69922, y: -97.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &580962529
@@ -885,8 +911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beansPerClick: 1
-  shrinkSize: {x: 5, y: 5, z: 5}
-  shrinkSpeed: 1
+  upgradeCost: 1000
 --- !u!65 &633205873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -910,10 +935,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79940d0c477a65d40937bf7556e0c348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beanPrefab: {fileID: 1414227567245614, guid: 825f0d178b202ee4986cbab30acb719e, type: 2}
+  prefab: {fileID: 1414227567245614, guid: 825f0d178b202ee4986cbab30acb719e, type: 2}
   spawnPoint: {fileID: 444199586}
   startingPoolSize: 10
   currentPoolSize: 0
+  prefabsPerEmit: 1
   spawnForceMax: {x: 5, y: 10, z: 5}
 --- !u!1 &642647875
 GameObject:
@@ -1338,7 +1364,7 @@ Transform:
   m_LocalScale: {x: 5, y: 0.5, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &712735855
 GameObject:
@@ -1827,6 +1853,7 @@ GameObject:
   - component: {fileID: 729864051}
   - component: {fileID: 729864050}
   - component: {fileID: 729864049}
+  - component: {fileID: 729864052}
   m_Layer: 5
   m_Name: HARVEST
   m_TagString: Untagged
@@ -1891,7 +1918,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 729864050}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 729864052}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &729864050
@@ -1927,6 +1965,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 729864047}
+--- !u!114 &729864052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 729864047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 3
 --- !u!1 &746265264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2050,7 @@ GameObject:
   - component: {fileID: 777142900}
   - component: {fileID: 777142899}
   - component: {fileID: 777142898}
+  - component: {fileID: 777142901}
   m_Layer: 5
   m_Name: Sell Per Click
   m_TagString: Untagged
@@ -2064,7 +2115,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 777142899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 777142901}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &777142899
@@ -2100,6 +2162,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 777142896}
+--- !u!114 &777142901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 777142896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 2
 --- !u!1 &785938913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,6 +2505,7 @@ GameObject:
   - component: {fileID: 879376522}
   - component: {fileID: 879376521}
   - component: {fileID: 879376520}
+  - component: {fileID: 879376523}
   m_Layer: 5
   m_Name: COST
   m_TagString: Untagged
@@ -2495,7 +2570,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 879376521}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 879376523}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &879376521
@@ -2531,6 +2617,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 879376518}
+--- !u!114 &879376523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 879376518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 7
 --- !u!1 &950189890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,7 +3096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 49.999985, y: -213.26}
+  m_AnchoredPosition: {x: 50, y: -213.26}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1252242723
@@ -3012,6 +3110,7 @@ GameObject:
   - component: {fileID: 1252242727}
   - component: {fileID: 1252242726}
   - component: {fileID: 1252242725}
+  - component: {fileID: 1252242728}
   m_Layer: 5
   m_Name: BREW
   m_TagString: Untagged
@@ -3076,7 +3175,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1252242726}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1252242728}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1252242726
@@ -3112,6 +3222,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1252242723}
+--- !u!114 &1252242728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252242723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 5
 --- !u!1 &1266706856
 GameObject:
   m_ObjectHideFlags: 0
@@ -3217,6 +3339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coffeeSoldPerClick: 1
+  upgradeCost: 3000
   currentCustomer: {fileID: 2077100273}
 --- !u!65 &1273375150
 BoxCollider:
@@ -3283,7 +3406,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284888178
 GameObject:
@@ -3368,7 +3491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285948426
 GameObject:
@@ -3466,6 +3589,7 @@ GameObject:
   - component: {fileID: 1293861457}
   - component: {fileID: 1293861456}
   - component: {fileID: 1293861455}
+  - component: {fileID: 1293861458}
   m_Layer: 5
   m_Name: Coffee Per Click
   m_TagString: Untagged
@@ -3530,7 +3654,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1293861456}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1293861458}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1293861456
@@ -3566,6 +3701,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1293861453}
+--- !u!114 &1293861458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1293861453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 0
 --- !u!1 &1297776298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,6 +3724,7 @@ GameObject:
   - component: {fileID: 1297776302}
   - component: {fileID: 1297776301}
   - component: {fileID: 1297776300}
+  - component: {fileID: 1297776303}
   m_Layer: 5
   m_Name: SELL
   m_TagString: Untagged
@@ -3641,7 +3789,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1297776301}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1297776303}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1297776301
@@ -3677,6 +3836,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1297776298}
+--- !u!114 &1297776303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1297776298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 6
 --- !u!1 &1497553247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3796,6 +3967,7 @@ GameObject:
   - component: {fileID: 1554706750}
   - component: {fileID: 1554706749}
   - component: {fileID: 1554706748}
+  - component: {fileID: 1554706751}
   m_Layer: 5
   m_Name: Brew Per Click
   m_TagString: Untagged
@@ -3860,7 +4032,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1554706749}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1554706751}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1554706749
@@ -3896,6 +4079,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1554706746}
+--- !u!114 &1554706751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1554706746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 1
 --- !u!1 &1652655405
 GameObject:
   m_ObjectHideFlags: 0
@@ -4029,7 +4224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 199.29, y: 0}
+  m_AnchoredPosition: {x: 199.28906, y: 0}
   m_SizeDelta: {x: 100, y: 303.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1655453027
@@ -4464,7 +4659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -87.3, y: -87}
+  m_AnchoredPosition: {x: -87.30078, y: -87}
   m_SizeDelta: {x: 100, y: 139.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830440486
@@ -4559,6 +4754,7 @@ GameObject:
   - component: {fileID: 1860271918}
   - component: {fileID: 1860271917}
   - component: {fileID: 1860271916}
+  - component: {fileID: 1860271919}
   m_Layer: 5
   m_Name: COST
   m_TagString: Untagged
@@ -4623,7 +4819,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1860271917}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1860271919}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1860271917
@@ -4659,6 +4866,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1860271914}
+--- !u!114 &1860271919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1860271914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9e1755ce478fc41823f5e90b9640e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeType: 4
 --- !u!1 &1863253598
 GameObject:
   m_ObjectHideFlags: 0
@@ -4811,7 +5030,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: COFFEE
+  m_Text: REAP
 --- !u!222 &1910722502
 CanvasRenderer:
   m_ObjectHideFlags: 0

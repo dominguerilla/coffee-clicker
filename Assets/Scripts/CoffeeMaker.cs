@@ -5,6 +5,7 @@ using UnityEngine;
 public class CoffeeMaker : MonoBehaviour {
     
     public int coffeePerClick = 1;
+    public float upgradeCost = 200f;
     ResourceManager rManager;
 
 	// Use this for initialization

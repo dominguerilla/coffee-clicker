@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Emits coffee bean prefabs from the coffee plant. Used by player clicks and farmers.
+/// Emits the specified prefab from the spawnPoint.
 /// </summary>
-public class CoffeeBeanEmitter : MonoBehaviour {
+public class PrefabEmitter : MonoBehaviour {
 
-    public GameObject beanPrefab;
+    public GameObject prefab;
     public Transform spawnPoint;
     public int startingPoolSize = 30;
     public int currentPoolSize;
+    public int prefabsPerEmit = 1;
 
     public Vector3 spawnForceMax = new Vector3(1, 1, 1);
 
-    Stack<GameObject> beanPool;
-    CoffeePlant plant;
+    Stack<GameObject> prefabPool;
+    
 
     private void Awake() {
-        beanPool = new Stack<GameObject>();
-        plant = GetComponent<CoffeePlant>();
+        prefabPool = new Stack<GameObject>();
         AddToPool(startingPoolSize);
-        currentPoolSize = beanPool.Count;
+        currentPoolSize = prefabPool.Count;
     }
 
     private void Update() {
-        currentPoolSize = beanPool.Count;
+        currentPoolSize = prefabPool.Count;
     }
 
     void AddToPool(int number) {
         for (int i = 0; i < number; i++) {
-            GameObject bean = GameObject.Instantiate<GameObject>(beanPrefab);
+            GameObject bean = GameObject.Instantiate<GameObject>(prefab);
             CoffeeBeanParticle beanParticle = bean.GetComponent<CoffeeBeanParticle>();
             beanParticle.SetEmitter(this);
             bean.SetActive(false);
-            beanPool.Push(bean);
+            prefabPool.Push(bean);
         }
     }
 
@@ -43,23 +43,24 @@ public class CoffeeBeanEmitter : MonoBehaviour {
     }
 
     public void EmitBeanClick() {
-        for(int i = 0; i < plant.beansPerClick; i++) {
-            if(beanPool.Count > plant.beansPerClick) {
-                GameObject bean = beanPool.Pop();
-                bean.transform.position = spawnPoint.position;
-                CoffeeBeanParticle particle = bean.GetComponent<CoffeeBeanParticle>();
+        for(int i = 0; i < prefabsPerEmit; i++) {
+            if(prefabPool.Count > prefabsPerEmit) {
+                GameObject poppedPrefab = prefabPool.Pop();
+                poppedPrefab.transform.position = spawnPoint.position;
+                CoffeeBeanParticle particle = poppedPrefab.GetComponent<CoffeeBeanParticle>();
                 
-                Rigidbody beanBody = bean.GetComponent<Rigidbody>();
+                Rigidbody beanBody = poppedPrefab.GetComponent<Rigidbody>();
                 float x = Random.Range(-spawnForceMax.x, spawnForceMax.x);
                 float y = Random.Range(spawnForceMax.y/20, spawnForceMax.y);
                 float z = Random.Range(-spawnForceMax.z, spawnForceMax.z);
                 
                 Vector3 spawnForce = new Vector3(x, y, z);
-                bean.SetActive(true);
+                poppedPrefab.SetActive(true);
                 beanBody.AddRelativeForce(spawnForce, ForceMode.Impulse);
                 beanBody.AddTorque(spawnForce);
                 StartCoroutine(particle.Disappear());
             }else {
+                //expand by 10% if there isn't enough objects
                 AddToPool(startingPoolSize / 10);
             }
         }
@@ -67,6 +68,6 @@ public class CoffeeBeanEmitter : MonoBehaviour {
 
     public void ReturnToPool(GameObject obj) {
         obj.SetActive(false);
-        beanPool.Push(obj);
+        prefabPool.Push(obj);
     }
 }

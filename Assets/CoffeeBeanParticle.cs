@@ -6,7 +6,7 @@ public class CoffeeBeanParticle : MonoBehaviour {
 
     public float lifetime = 5f;
     
-    CoffeeBeanEmitter emitter;
+    PrefabEmitter emitter;
     Material[] mats;
 
     private void Awake() {
@@ -17,7 +17,7 @@ public class CoffeeBeanParticle : MonoBehaviour {
         }
     }
 
-    public void SetEmitter(CoffeeBeanEmitter emitter) {
+    public void SetEmitter(PrefabEmitter emitter) {
         this.emitter = emitter;
     }
 

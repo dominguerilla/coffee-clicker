@@ -22,6 +22,20 @@ public class ResourceManager : MonoBehaviour {
             Destroy(this);   
     }
 
+    /// <summary>
+    /// If cost is less than/eq to current money, then cost is subtracted from money and returns true.
+    /// Else, returns false.
+    /// </summary>
+    /// <param name="cost"></param>
+    /// <returns></returns>
+    public bool BuyUpgrade(float cost) {
+        if(cost <= money) {
+            money -= cost;
+            return true;
+        }
+        return false;
+    }
+
     public void BrewCoffeeClick() {
         if(coffeeBeans - beansPerCoffee >= 0) {
             coffeeBeans -= beansPerCoffee;
@@ -45,12 +59,9 @@ public class ResourceManager : MonoBehaviour {
 
     public void SellCoffee(Customer currentCustomer) {
         if(coffee > 0 && currentCustomer.numberOfCoffees <= coffee) {
-            Debug.Log("Selling coffee...");
             float price = currentCustomer.numberOfCoffees * pricePerCoffee;
             coffee -= currentCustomer.numberOfCoffees;
             money += price;
-        }else {
-            Debug.Log("Not enough coffee!");
         }
     }
    
