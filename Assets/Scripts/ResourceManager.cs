@@ -36,11 +36,13 @@ public class ResourceManager : MonoBehaviour {
         return false;
     }
 
-    public void BrewCoffeeClick() {
+    public bool BrewCoffeeClick() {
         if(coffeeBeans - beansPerCoffee >= 0) {
             coffeeBeans -= beansPerCoffee;
             coffee += coffeePerClickBrew;
+            return true;
         }
+        return false;
     }
 
     public void BrewCoffee(float coffeeAmount) {
@@ -57,12 +59,14 @@ public class ResourceManager : MonoBehaviour {
         money += coffeeAmount * pricePerCoffee;
     }
 
-    public void SellCoffee(Customer currentCustomer) {
+    public bool SellCoffeeClick(Customer currentCustomer) {
         if(coffee > 0 && currentCustomer.numberOfCoffees <= coffee) {
             float price = currentCustomer.numberOfCoffees * pricePerCoffee;
             coffee -= currentCustomer.numberOfCoffees;
             money += price;
+            return true;
         }
+        return false;
     }
    
 }

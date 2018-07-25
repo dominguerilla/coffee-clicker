@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoffeeBeanParticle : MonoBehaviour {
+public class EmittedParticle : MonoBehaviour {
 
     public float lifetime = 5f;
     

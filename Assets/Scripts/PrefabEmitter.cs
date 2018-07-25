@@ -31,23 +31,19 @@ public class PrefabEmitter : MonoBehaviour {
     void AddToPool(int number) {
         for (int i = 0; i < number; i++) {
             GameObject bean = GameObject.Instantiate<GameObject>(prefab);
-            CoffeeBeanParticle beanParticle = bean.GetComponent<CoffeeBeanParticle>();
+            EmittedParticle beanParticle = bean.GetComponent<EmittedParticle>();
             beanParticle.SetEmitter(this);
             bean.SetActive(false);
             prefabPool.Push(bean);
         }
     }
 
-    private void OnMouseDown() {
-        EmitBeanClick();   
-    }
-
-    public void EmitBeanClick() {
+    public void Emit() {
         for(int i = 0; i < prefabsPerEmit; i++) {
             if(prefabPool.Count > prefabsPerEmit) {
                 GameObject poppedPrefab = prefabPool.Pop();
                 poppedPrefab.transform.position = spawnPoint.position;
-                CoffeeBeanParticle particle = poppedPrefab.GetComponent<CoffeeBeanParticle>();
+                EmittedParticle particle = poppedPrefab.GetComponent<EmittedParticle>();
                 
                 Rigidbody beanBody = poppedPrefab.GetComponent<Rigidbody>();
                 float x = Random.Range(-spawnForceMax.x, spawnForceMax.x);
