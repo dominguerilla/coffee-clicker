@@ -120,4 +120,27 @@ public class UpgradeManager : MonoBehaviour {
                 break;
         }
     }
+
+    public float getUpgradePrice(UPGRADE_TYPE upgrade){
+        switch(upgrade) {
+            case UPGRADE_TYPE.CLICK_HARVEST:
+                return plant.upgradeCost;
+            case UPGRADE_TYPE.CLICK_BREW:
+                return cMaker.upgradeCost;
+            case UPGRADE_TYPE.CLICK_SELL:
+                return register.upgradeCost;
+            case UPGRADE_TYPE.FARMER_HARVEST:
+                return farmerManager.harvestUpgradeCost;
+            case UPGRADE_TYPE.FARMER_COST:
+                return farmerManager.costUpgradeCost;
+            case UPGRADE_TYPE.BARISTA_BREW:
+                return baristaManager.brewUpgradeCost;
+            case UPGRADE_TYPE.BARISTA_SELL:
+                return baristaManager.sellUpgradeCost;
+            case UPGRADE_TYPE.BARISTA_COST:
+                return baristaManager.costUpgradeCost;
+            default:
+                return -1f;
+        }
+    }
 }

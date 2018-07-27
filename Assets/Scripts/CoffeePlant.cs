@@ -23,10 +23,9 @@ public class CoffeePlant : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if(EventSystem.current.IsPointerOverGameObject()) {
-            rManager.coffeeBeans += beansPerClick;
-            emitter.Emit();
-        }
+        rManager.coffeeBeans += beansPerClick;
+        emitter.Emit();
+        
     }
     
 }
