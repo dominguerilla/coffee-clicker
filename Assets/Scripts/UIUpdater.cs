@@ -10,6 +10,7 @@ public class UIUpdater : MonoBehaviour {
     public static UIUpdater instance = null;
 
     public GameObject shopGO;
+    public GameObject helpGO;
 
     [Header("Resource Counts")]
     public Text coffeeBeanCount;
@@ -63,6 +64,11 @@ public class UIUpdater : MonoBehaviour {
     public void ToggleShop() {
         bool isActive = shopGO.activeInHierarchy;
         shopGO.SetActive(!isActive);
+    }
+
+    public void ToggleHelp() {
+        bool isActive = helpGO.activeInHierarchy;
+        helpGO.SetActive(!isActive);
     }
 
     public void SetHoveredButton(UpgradeButton button, float cost){
