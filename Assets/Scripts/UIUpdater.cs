@@ -62,11 +62,17 @@ public class UIUpdater : MonoBehaviour {
     }
 
     public void ToggleShop() {
+        if(helpGO.activeInHierarchy)
+            ToggleHelp();
+
         bool isActive = shopGO.activeInHierarchy;
         shopGO.SetActive(!isActive);
     }
 
     public void ToggleHelp() {
+        if(shopGO.activeInHierarchy)
+            ToggleShop();
+
         bool isActive = helpGO.activeInHierarchy;
         helpGO.SetActive(!isActive);
     }
